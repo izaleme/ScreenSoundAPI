@@ -4,17 +4,7 @@ namespace ScreenSoundAPI.Filters;
 
 internal class LinqFilters
 {
-    //public static void FiltrarGenerosMusicais(List<Musica> musicas)
-    //{
-    //    var allGenres = musicas.Select(generos => generos.Genero).Distinct().ToList();
-
-    //    foreach (var genre in allGenres)
-    //    {
-    //        Console.WriteLine($"- {genre}");
-    //    }
-    //}
-
-    public static void ExibirTodosGenerosMusicaisUnicos(List<Musica> musicas)
+    public static void ExibirGenerosMusicais(List<Musica> musicas)
     {
         HashSet<string> generosUnicos = new HashSet<string>(); // não permite dualidade
 
@@ -36,6 +26,39 @@ internal class LinqFilters
         foreach (var genero in generosUnicos.OrderBy(g => g))
         {
             Console.WriteLine($"- {genero}");
+        }
+    }
+
+    public static void FiltrarArtistasPorGeneroMusical(List<Musica> musicas, string genero)
+    {
+        var artistasPorgeneroMusical = musicas.Where(musica => musica.Genero!.Contains(genero)).Select(musica => musica.Artista).Distinct().ToList();
+        Console.WriteLine($"\nExibindo os artistas do gênero musical {genero} \n");
+
+        foreach (var artista in artistasPorgeneroMusical)
+        {
+            Console.WriteLine($"- {artista}");
+        }
+    }
+
+    public static void FiltrarMusicasDoArtista(List<Musica> musicas, string nomeArtista)
+    {
+        var musicasArtista = musicas.Where(musica => musica.Artista!.ToLower().Equals(nomeArtista.ToLower())).OrderBy(m => m).ToList();
+
+        Console.WriteLine($"** {nomeArtista} **");
+        foreach (var musica in musicasArtista)
+        {
+            Console.WriteLine($"- {musica.Nome}");
+        }
+    }
+
+    public static void FiltrarMusicasPorAno(List<Musica> musicas, int ano)
+    {
+        var musicasAno = musicas.Where(musica => musica.Ano == ano).OrderBy(musica => musica.Nome).Select(musica => musica.Nome).Distinct().ToList();
+
+        Console.WriteLine($"Músicas do ano {ano}:");
+        foreach (var musica in musicasAno)
+        {
+            Console.WriteLine($"- {musica}");
         }
     }
 }
