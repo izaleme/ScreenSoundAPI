@@ -23,4 +23,15 @@ internal class Musica
         Console.WriteLine($"Duração: {Duracao / 1000}");
         Console.WriteLine($"Gênero musical: {Genero}");
     }
+
+    //public static string ExibeGenerosMusicais(List<Musica> musicas)
+    //{
+    //    var generos = musicas.Select(musica => musica.Genero) // Seleciona os gêneros
+    //                         .Where(g => g != null) // Filtra os valores null
+    //                         .Distinct() // Distinct ignorando dif entre maiúscula/minúscula
+    //                         .OrderBy(g => g); // Ordena por ordem alfabética
+
+    //    string generosString = $"Gêneros musicais encontrados: {string.Join("\n ", generos)}";
+    //    return generosString;
+    //}
 }
