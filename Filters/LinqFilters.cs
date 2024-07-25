@@ -6,7 +6,7 @@ internal class LinqFilters
 {
     public static void ExibirGenerosMusicais(List<Musica> musicas)
     {
-        HashSet<string> generosUnicos = new HashSet<string>(); // não permite dualidade
+        HashSet<string> generosUnicos = new(); // não permite dualidade
 
         foreach (Musica musica in musicas)
         {
@@ -27,6 +27,7 @@ internal class LinqFilters
         {
             Console.WriteLine($"- {genero}");
         }
+        Console.WriteLine();
     }
 
     public static void FiltrarArtistasPorGeneroMusical(List<Musica> musicas, string genero)
@@ -38,6 +39,7 @@ internal class LinqFilters
         {
             Console.WriteLine($"- {artista}");
         }
+        Console.WriteLine();
     }
 
     public static void FiltrarMusicasDoArtista(List<Musica> musicas, string nomeArtista)
@@ -49,6 +51,7 @@ internal class LinqFilters
         {
             Console.WriteLine($"- {musica.Nome}");
         }
+        Console.WriteLine();
     }
 
     public static void FiltrarMusicasPorAno(List<Musica> musicas, int ano)
@@ -67,5 +70,19 @@ internal class LinqFilters
         {
             Console.WriteLine("Nenhuma música encontrada para o ano informado!");
         }
+        Console.WriteLine();
+    }
+
+    public static void FiltrarMusicasPorTonalidade(List<Musica> musicas, int nota)
+    {
+        var tonalidade = musicas.Where(m => m.Key == nota).Select(m => m.Nota).Distinct().ToList();
+        var musicasTonalidade = musicas.Where(m => m.Key == nota).OrderBy(m => m.Nome).ThenBy(m => m.Artista).Select(m => m.Nome).Distinct().ToList();
+
+        Console.WriteLine($"Músicas da tonalidade {tonalidade[0]}:\n");
+        foreach (var musica in musicasTonalidade)
+        {
+            Console.WriteLine($"- {musica}");
+        }
+        Console.WriteLine();
     }
 }
