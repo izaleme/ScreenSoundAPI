@@ -12,3 +12,4 @@ API que será utilizada no ScreenSound.
 * Filtrar artistas por gênero musical;
 * Filtrar as músicas de um artista;
 * Filtrar as músicas por ano.
+* Transcrever as propriedades do JsonProperty "key" em tons musicais.
