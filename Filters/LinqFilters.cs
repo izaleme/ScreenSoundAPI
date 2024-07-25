@@ -42,7 +42,7 @@ internal class LinqFilters
 
     public static void FiltrarMusicasDoArtista(List<Musica> musicas, string nomeArtista)
     {
-        var musicasArtista = musicas.Where(musica => musica.Artista!.ToLower().Equals(nomeArtista.ToLower())).OrderBy(m => m).ToList();
+        var musicasArtista = musicas.Where(musica => musica.Artista!.ToLower().Equals(nomeArtista.ToLower())).OrderBy(musica => musica.Nome).ThenBy(musica => musica.Artista).ToList();
 
         Console.WriteLine($"** {nomeArtista} **");
         foreach (var musica in musicasArtista)
@@ -53,12 +53,19 @@ internal class LinqFilters
 
     public static void FiltrarMusicasPorAno(List<Musica> musicas, int ano)
     {
-        var musicasAno = musicas.Where(musica => musica.Ano == ano).OrderBy(musica => musica.Nome).Select(musica => musica.Nome).Distinct().ToList();
+        bool existe = false;
+        var musicasAno = musicas.Where(musica => musica.Ano == ano).OrderBy(musica => musica.Nome).ThenBy(musica => musica.Artista).Select(musica => musica.Nome).Distinct().ToList();
 
         Console.WriteLine($"Músicas do ano {ano}:");
         foreach (var musica in musicasAno)
         {
+            existe = true;
             Console.WriteLine($"- {musica}");
+        }
+
+        if (!existe)
+        {
+            Console.WriteLine("Nenhuma música encontrada para o ano informado!");
         }
     }
 }
