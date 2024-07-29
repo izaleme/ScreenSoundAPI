@@ -82,16 +82,17 @@ internal class Musica
         Console.WriteLine($"Tonalidade: {Nota}");
     }
 
-    //public static string ExibeGenerosMusicais(List<Musica> musicas)
-    //{
-    //    var generos = musicas.Select(musica => musica.Genero) // Seleciona os gêneros
-    //                         .Where(g => g != null) // Filtra os valores null
-    //                         .Distinct() // Distinct ignorando dif entre maiúscula/minúscula
-    //                         .OrderBy(g => g); // Ordena por ordem alfabética
+    public static string ExibeGenerosMusicais(List<Musica> musicas)
+    {
+        var generos = musicas.Where(g => !String.IsNullOrEmpty(g.Genero.Trim()))
+                             .SelectMany(musica => musica.Genero.Split(',', StringSplitOptions.TrimEntries))
+                             .OrderBy(y => y)
+                             .Distinct()
+                             .ToList();
 
-    //    string generosString = $"Gêneros musicais encontrados: {string.Join("\n ", generos)}";
-    //    return generosString;
-    //}
+        string generosString = $"Gêneros musicais encontrados: {string.Join("\n ", generos)}";
+        return generosString;
+    }
 
     #endregion
 }

@@ -25,7 +25,8 @@ using (HttpClient client = new HttpClient())
         musicasFavsAsh.GerarAquivoJson();*/
 
         //musicas[19].ExibeDetalhesMusica();
-        LinqFilters.FiltrarMusicasPorTonalidade(musicas, 1);
+        Musica.ExibeGenerosMusicais(musicas);
+        //LinqFilters.FiltrarMusicasPorTonalidade(musicas, 1);
     }
     catch (Exception ex)
     {
