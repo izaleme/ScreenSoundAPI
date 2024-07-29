@@ -6,23 +6,18 @@ internal class LinqFilters
 {
     public static void ExibirGenerosMusicais(List<Musica> musicas)
     {
-        HashSet<string> generosUnicos = new(); // não permite dualidade
+        // Cria um HashSet para armazenar os gêneros únicos
+        HashSet<string> generosUnicos = new HashSet<string>(StringComparer.OrdinalIgnoreCase); // Não permite dualidade
 
-        foreach (Musica musica in musicas)
-        {
-            string[] generos = musica.Genero!.Split(',');
+        // Usa o LINQ para filtrar, transformar e adicionar os gêneros ao HashSet
+        musicas.Where(g => !string.IsNullOrEmpty(g.Genero.Trim())) // Filtra os valores null
+               .SelectMany(musica => musica.Genero!.Split(',', StringSplitOptions.TrimEntries)) // Transforma uma coleção (com coleções) em uma sequência única
+               .Where(g => g != "set()") // Tratando spring do python
+               .ToList() // Transforma em lista
+               .ForEach(g => generosUnicos.Add(g)); // Adiciona ao HashSet
 
-            foreach (string genero in generos)
-            {
-                if (!(genero.Trim() == "set()")) // Tratando spring do python
-                {
-                    generosUnicos.Add(genero.Trim());
-                }
-            }
-        }
-
-        // ~~~ Exibição ~~~
-        Console.WriteLine("Gêneros musicais encontrados: \n");
+        // ~~~Exibição ~~~
+        Console.WriteLine("Gêneros musicais encontrados:");
         foreach (var genero in generosUnicos.OrderBy(g => g))
         {
             Console.WriteLine($"- {genero}");
@@ -75,8 +70,8 @@ internal class LinqFilters
 
     public static void FiltrarMusicasPorTonalidade(List<Musica> musicas, int nota)
     {
-        var tonalidade = musicas.Where(m => m.Key == nota).Select(m => m.Nota).Distinct().ToList();
-        var musicasTonalidade = musicas.Where(m => m.Key == nota).OrderBy(m => m.Nome).ThenBy(m => m.Artista).Select(m => m.Nome).Distinct().ToList();
+        var tonalidade = musicas.Where(m => m.Key.Equals(nota)).Select(m => m.Nota).Distinct().ToList();
+        var musicasTonalidade = musicas.Where(m => m.Key.Equals(nota)).OrderBy(m => m.Nome).ThenBy(m => m.Artista).Select(m => m.Nome).Distinct().ToList();
 
         Console.WriteLine($"Músicas da tonalidade {tonalidade[0]}:\n");
         foreach (var musica in musicasTonalidade)
