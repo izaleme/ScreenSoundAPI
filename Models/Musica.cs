@@ -82,5 +82,17 @@ internal class Musica
         Console.WriteLine($"Tonalidade: {Nota}");
     }
 
+    public static string ExibeGenerosMusicais(List<Musica> musicas)
+    {
+        var generos = musicas.Where(g => !String.IsNullOrEmpty(g.Genero.Trim()))
+                             .SelectMany(musica => musica.Genero.Split(',', StringSplitOptions.TrimEntries))
+                             .OrderBy(y => y)
+                             .Distinct()
+                             .ToList();
+
+        string generosString = $"Gêneros musicais encontrados: {string.Join("\n ", generos)}";
+        return generosString;
+    }
+
     #endregion
 }
