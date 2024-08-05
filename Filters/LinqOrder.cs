@@ -2,9 +2,9 @@
 
 namespace ScreenSoundAPI.Filters;
 
-internal class LinqOrder
+public class LinqOrder
 {
-    public static void ExibiMusicasOrdenadas(List<Musica> musicas)
+    public static void ExibirMusicasOrdenadas(List<Musica> musicas)
     {
         var musicasOrdenadas = musicas.OrderBy(mus => mus.Nome).Select(mus => mus.Nome).Distinct().ToList();
         Console.WriteLine("Lista de músicas:");
