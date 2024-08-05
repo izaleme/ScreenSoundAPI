@@ -2,7 +2,7 @@
 
 namespace ScreenSoundAPI.Filters;
 
-internal class LinqFilters
+public static class LinqFilters
 {
     public static void ExibirGenerosMusicais(List<Musica> musicas)
     {
@@ -74,6 +74,26 @@ internal class LinqFilters
         var musicasTonalidade = musicas.Where(m => m.Key.Equals(nota)).OrderBy(m => m.Nome).ThenBy(m => m.Artista).Select(m => m.Nome).Distinct().ToList();
 
         Console.WriteLine($"Músicas da tonalidade {tonalidade[0]}:\n");
+        foreach (var musica in musicasTonalidade)
+        {
+            Console.WriteLine($"- {musica}");
+        }
+        Console.WriteLine();
+    }
+
+    public static void FiltrarMusicasPorTonalidade2(List<Musica> musicas, int nota)
+    {
+        var tonalidade = Musica.Notas.TryGetValue(nota, out string? tonalidadeStr) ? tonalidadeStr : "Nota inválida";
+
+        var musicasTonalidade = musicas
+            .Where(m => m.Key == nota)
+            .OrderBy(m => m.Nome)
+            .ThenBy(m => m.Artista)
+            .Select(m => m.Nome)
+            .Distinct()
+            .ToList();
+
+        Console.WriteLine($"Músicas da tonalidade {tonalidade}:\n");
         foreach (var musica in musicasTonalidade)
         {
             Console.WriteLine($"- {musica}");

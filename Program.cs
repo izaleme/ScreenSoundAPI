@@ -27,7 +27,9 @@ using (HttpClient client = new HttpClient())
         musicasFavsAsh.GerarAquivoJson();*/
 
         //musicas[19].ExibeDetalhesMusica();
-        LinqFilters.FiltrarMusicasPorTonalidade(musicas, 1); // 1 = C#
+        //LinqFilters.FiltrarMusicasPorTonalidade(musicas, 1); // 1 = C#
+
+        // Edit: Comentados porque agora esse projeto será usado como dll, e não como exe.
     }
     catch (Exception ex)
     {

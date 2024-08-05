@@ -2,7 +2,7 @@
 
 namespace ScreenSoundAPI.Models;
 
-internal class MusicasPreferidas
+public class MusicasPreferidas
 {
     #region Attributes/Properties
 

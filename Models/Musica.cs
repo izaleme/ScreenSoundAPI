@@ -2,7 +2,7 @@
 
 namespace ScreenSoundAPI.Models;
 
-internal class Musica
+public class Musica
 {
     #region Attributes/Properties
 
@@ -32,7 +32,7 @@ internal class Musica
     [JsonPropertyName("key")]
     public int Key { get; set; }
 
-    private Dictionary<int, string> notas = new Dictionary<int, string>
+    private static readonly Dictionary<int, string> notas = new Dictionary<int, string>
     {
         { 0,  "C"  },
         { 1,  "C#" },
@@ -48,20 +48,9 @@ internal class Musica
         { 11, "B"  }
     };
 
-    public string Nota
-    {
-        get
-        {
-            if (notas.TryGetValue(Key, out string? value))
-            {
-                return value;
-            }
-            else
-            {
-                return "Nota inválida";
-            }
-        }
-    }
+    public static IReadOnlyDictionary<int, string> Notas => notas;
+
+    public string Nota => notas.TryGetValue(Key, out string? value) ? value : "Nota inválida";
 
     #endregion
 
